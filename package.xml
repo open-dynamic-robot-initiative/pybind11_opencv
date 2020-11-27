@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>pybind11_opencv</name>
+  <version>1.0.0</version>
+  <description>Support for basic OpenCV types in pybind11.</description>
+
+  <maintainer email="felix.widmaier@tue.mpg.de">Felix Widmaier</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>libopencv-dev</depend>
+  <depend>pybind11_catkin</depend>
+
+  <export>
+  </export>
+</package>
