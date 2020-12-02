@@ -1,47 +1,63 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 project(pybind11_opencv)
 
 # Specify C++ Standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-find_package(catkin REQUIRED COMPONENTS
-  pybind11_catkin
-)
-
+find_package(ament_cmake REQUIRED)
+find_package(mpi_cmake_modules REQUIRED)
+find_package(pybind11 REQUIRED)
 find_package(OpenCV REQUIRED)
 
-
-catkin_package(
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS pybind11_catkin
-  DEPENDS OpenCV
-)
 
 ###########
 ## Build ##
 ###########
 
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-  ${OpenCV_INCLUDE_DIRS}
+add_library(${PROJECT_NAME} INTERFACE)
+target_include_directories(${PROJECT_NAME} INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+    ${OpenCV_INCLUDE_DIRS}
+)
+target_link_libraries(${PROJECT_NAME} INTERFACE
+    ${OpenCV_LIBRARIES}
+    pybind11::pybind11
 )
 
-catkin_add_pybind11_module(cvbind_test ${OpenCV_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
+ament_export_interfaces(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
+
 # Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+        DESTINATION include/${PROJECT_NAME})
+
+install(
+    TARGETS ${PROJECT_NAME}
+    EXPORT export_${PROJECT_NAME}
+    LIBRARY DESTINATION lib
 )
 
 #############
 ## Testing ##
 #############
 
-# Add folders to be run by python nosetests
-catkin_add_nosetests(test)
+if (BUILD_TESTING)
+    find_package(ament_cmake_nose REQUIRED)
+
+    add_pybind11_module(cvbind_test srcpy/cvbind_test.cpp
+        LINK_LIBRARIES ${PROJECT_NAME}
+    )
+
+    ament_add_nose_test(test_cvbind test/test_cvbind.py)
+endif()
+
+
+ament_export_include_directories(include)
+ament_export_dependencies(pybind11 OpenCV)
+ament_package()
