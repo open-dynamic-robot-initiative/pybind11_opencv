@@ -42,4 +42,4 @@ PYBIND11_MODULE(cvbind_test, m)
     m.def("addmat", &addmat, "add two matrix");
     m.def("imread", &imread, "read the file into np.ndarray/cv::Mat");
     m.def("imwrite", &imwrite, "write np.ndarray/cv::Mat into the file");
-};
+}
