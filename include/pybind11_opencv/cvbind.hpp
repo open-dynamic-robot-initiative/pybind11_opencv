@@ -167,7 +167,9 @@ public:
     }
 
     //! Cast cv::Mat to numpy.ndarray
-    static handle cast(const cv::Mat& mat, return_value_policy, handle defval)
+    static handle cast(const cv::Mat& mat,
+                       return_value_policy,
+                       handle /*defval*/)
     {
         std::string format = format_descriptor<unsigned char>::format();
         size_t elemsize = sizeof(unsigned char);
