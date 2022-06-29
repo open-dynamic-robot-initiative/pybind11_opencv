@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>pybind11_opencv</name>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
   <description>Support for basic OpenCV types in pybind11.</description>
 
   <maintainer email="felix.widmaier@tue.mpg.de">Felix Widmaier</maintainer>
