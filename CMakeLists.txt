@@ -55,6 +55,10 @@ install(
 if (BUILD_TESTING)
     find_package(ament_cmake_nose REQUIRED)
 
+    # Need to install a dummy package with __init__.py, otherwise the package
+    # will not be added to PYTHONPATH in the setup.bash and the pybind11 module
+    # installed below will not be found.
+    ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR test/dummy_pkg/${PROJECT_NAME})
     add_pybind11_module(cvbind_test srcpy/cvbind_test.cpp
         LINK_LIBRARIES ${PROJECT_NAME}
     )
