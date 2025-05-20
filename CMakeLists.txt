@@ -53,7 +53,7 @@ install(
 #############
 
 if (BUILD_TESTING)
-    find_package(ament_cmake_nose REQUIRED)
+    find_package(ament_cmake_pytest REQUIRED)
 
     # Need to install a dummy package with __init__.py, otherwise the package
     # will not be added to PYTHONPATH in the setup.bash and the pybind11 module
@@ -63,7 +63,7 @@ if (BUILD_TESTING)
         LINK_LIBRARIES ${PROJECT_NAME}
     )
 
-    ament_add_nose_test(test_cvbind test/test_cvbind.py)
+    ament_add_pytest_test(test_cvbind test/test_cvbind.py)
 endif()
 
 
