@@ -36,7 +36,6 @@ target_link_libraries(${PROJECT_NAME} INTERFACE
 ## Install ##
 #############
 
-ament_export_interfaces(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
 # Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
@@ -67,6 +66,7 @@ if (BUILD_TESTING)
 endif()
 
 
+ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_include_directories(include)
 ament_export_dependencies(pybind11 OpenCV)
 ament_package()
