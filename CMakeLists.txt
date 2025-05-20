@@ -36,7 +36,6 @@ target_link_libraries(${PROJECT_NAME} INTERFACE
 ## Install ##
 #############
 
-ament_export_interfaces(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 
 # Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
@@ -53,7 +52,7 @@ install(
 #############
 
 if (BUILD_TESTING)
-    find_package(ament_cmake_nose REQUIRED)
+    find_package(ament_cmake_pytest REQUIRED)
 
     # Need to install a dummy package with __init__.py, otherwise the package
     # will not be added to PYTHONPATH in the setup.bash and the pybind11 module
@@ -63,10 +62,11 @@ if (BUILD_TESTING)
         LINK_LIBRARIES ${PROJECT_NAME}
     )
 
-    ament_add_nose_test(test_cvbind test/test_cvbind.py)
+    ament_add_pytest_test(test_cvbind test/test_cvbind.py)
 endif()
 
 
+ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_include_directories(include)
 ament_export_dependencies(pybind11 OpenCV)
 ament_package()
